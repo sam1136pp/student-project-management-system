@@ -758,6 +758,11 @@ tbody tr:hover {
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    z-index: 10;
+}
+
+.file-upload-area > *:not(input) {
+    pointer-events: none;
 }
 
 .file-upload-area .upload-icon {
