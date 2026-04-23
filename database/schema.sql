@@ -70,7 +70,7 @@ INSERT INTO users (username, password, role, name, email, department) VALUES
 
 -- Students: student1 / student123, student2 / student123, student3 / student123
 INSERT INTO users (username, password, role, name, email, department) VALUES
-('student1', '$2b$10$gar5obRteZOZCgoAQcjomu.Uy.cKKc2gxue.35lNAhLt/d9Rjx3sK', 'student', 'Aarav Patel', 'aarav@spms.edu', 'Computer Science'),
+('student1', '$2b$10$gar5obRteZOZCgoAQcjomu.Uy.cKKc2gxue.35lNAhLt/d9Rjx3sK', 'student', 'Swaroop Bangre', 'swaroop@spms.edu', 'Computer Science'),
 ('student2', '$2b$10$gar5obRteZOZCgoAQcjomu.Uy.cKKc2gxue.35lNAhLt/d9Rjx3sK', 'student', 'Sneha Reddy', 'sneha@spms.edu', 'Computer Science'),
 ('student3', '$2b$10$gar5obRteZOZCgoAQcjomu.Uy.cKKc2gxue.35lNAhLt/d9Rjx3sK', 'student', 'Vikram Singh', 'vikram@spms.edu', 'Information Technology');
 
