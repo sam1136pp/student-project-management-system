@@ -184,11 +184,32 @@ const selectedFileName = document.getElementById('selectedFileName');
 
 fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) {
-        selectedFileName.textContent = fileInput.files[0].name;
+        selectedFileName.textContent = 'Selected: ' + fileInput.files[0].name;
         uploadBtn.disabled = false;
     } else {
         selectedFileName.textContent = '';
         uploadBtn.disabled = true;
+    }
+});
+
+const fileUploadArea = document.getElementById('fileUploadArea');
+
+fileUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = 'var(--accent-blue)';
+});
+
+fileUploadArea.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = 'var(--border-glass)';
+});
+
+fileUploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = 'var(--border-glass)';
+    if (e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
     }
 });
 
