@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Dashboard - Manage users, projects, and the entire SPMS system.">
+    <title>SPMS — Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="toast-container" class="toast-container"></div>
+
+    <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">📚</div>
+                <h2>SPMS</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active" onclick="showSection('overview'); return false;"><span class="nav-icon">📊</span> Overview</a></li>
+                <li><a href="#" onclick="showSection('users'); return false;"><span class="nav-icon">👥</span> Users</a></li>
+                <li><a href="#" onclick="showSection('projects'); return false;"><span class="nav-icon">📁</span> Projects</a></li>
+            </ul>
+            <div class="sidebar-user">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div>
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+                <ul class="sidebar-nav mt-2">
+                    <li><button onclick="logout()"><span class="nav-icon">🚪</span> Logout</button></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- OVERVIEW SECTION -->
+            <section id="section-overview">
+                <div class="page-header">
+                    <h1>Admin Dashboard</h1>
+                    <p>System overview and management</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div class="stat-value" id="statStudents">0</div>
+                        <div class="stat-label">Students</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">👨‍🏫</div>
+                        <div class="stat-value" id="statFaculty">0</div>
+                        <div class="stat-label">Faculty</div>
+                    </div>
+                    <div class="stat-card yellow">
+                        <div class="stat-icon">📁</div>
+                        <div class="stat-value" id="statProjects">0</div>
+                        <div class="stat-label">Total Projects</div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value" id="statPending">0</div>
+                        <div class="stat-label">Pending Review</div>
+                    </div>
+                </div>
+
+                <!-- Quick stats breakdown -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h2>📊 Project Status Breakdown</h2>
+                    </div>
+                    <div class="stats-grid" style="margin-bottom:0">
+                        <div style="text-align:center;padding:20px">
+                            <div style="font-size:36px;font-weight:800;color:var(--accent-green)" id="statApproved">0</div>
+                            <div style="font-size:13px;color:var(--text-secondary)">Approved</div>
+                        </div>
+                        <div style="text-align:center;padding:20px">
+                            <div style="font-size:36px;font-weight:800;color:var(--accent-yellow)" id="statPendingAlt">0</div>
+                            <div style="font-size:13px;color:var(--text-secondary)">Pending</div>
+                        </div>
+                        <div style="text-align:center;padding:20px">
+                            <div style="font-size:36px;font-weight:800;color:var(--accent-red)" id="statRejected">0</div>
+                            <div style="font-size:13px;color:var(--text-secondary)">Rejected</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- USERS SECTION -->
+            <section id="section-users" style="display:none">
+                <div class="page-header">
+                    <h1>User Management</h1>
+                    <p>Add, view, and remove system users</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h2>👥 All Users</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openModal('addUserModal')">+ Add User</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <tr><td colspan="6" class="text-center" style="padding:40px;color:var(--text-muted)">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION -->
+            <section id="section-projects" style="display:none">
+                <div class="page-header">
+                    <h1>All Projects</h1>
+                    <p>View all student projects and assign mentors</p>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h2>📁 Projects</h2>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Student</th>
+                                    <th>Mentor</th>
+                                    <th>Technology</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectsTable">
+                                <tr><td colspan="6" class="text-center" style="padding:40px;color:var(--text-muted)">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="modal-close" onclick="closeModal('addUserModal')">&times;</button>
+            </div>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label for="newName">Full Name *</label>
+                    <input type="text" class="form-control" id="newName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmail">Email *</label>
+                    <input type="email" class="form-control" id="newEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="newUsername">Username *</label>
+                    <input type="text" class="form-control" id="newUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Password *</label>
+                    <input type="password" class="form-control" id="newPassword" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="newDepartment">Department</label>
+                    <input type="text" class="form-control" id="newDepartment">
+                </div>
+                <div class="form-group">
+                    <label for="newRole">Role *</label>
+                    <select class="form-control" id="newRole" required>
+                        <option value="">Select role</option>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create User</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Assign Mentor Modal -->
+    <div class="modal-overlay" id="assignModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Assign Mentor</h3>
+                <button class="modal-close" onclick="closeModal('assignModal')">&times;</button>
+            </div>
+            <form id="assignForm">
+                <input type="hidden" id="assignProjectId">
+                <div class="form-group">
+                    <label for="assignFaculty">Select Faculty / Mentor</label>
+                    <select class="form-control" id="assignFaculty" required>
+                        <option value="">Loading faculty list...</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Assign Mentor</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

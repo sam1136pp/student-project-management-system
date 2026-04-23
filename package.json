@@ -1,0 +1,23 @@
+{
+  "name": "spms",
+  "version": "1.0.0",
+  "description": "Student Project Management System - A DBMS-based web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["dbms", "student", "project", "management", "mysql", "express"],
+  "author": "sam1136pp",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.1.1",
+    "mysql2": "^3.22.2"
+  }
+}

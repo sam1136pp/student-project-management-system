@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student Dashboard - Submit and track your projects.">
+    <title>SPMS — Student Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="toast-container" class="toast-container"></div>
+
+    <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">📚</div>
+                <h2>SPMS</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active"><span class="nav-icon">📋</span> My Projects</a></li>
+                <li><a href="#" onclick="openNewProjectModal(); return false;"><span class="nav-icon">➕</span> New Project</a></li>
+            </ul>
+            <div class="sidebar-user">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">S</div>
+                    <div>
+                        <div class="user-name" id="userName">Student</div>
+                        <div class="user-role">Student</div>
+                    </div>
+                </div>
+                <ul class="sidebar-nav mt-2">
+                    <li><button onclick="logout()"><span class="nav-icon">🚪</span> Logout</button></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1>My Projects</h1>
+                <p>Submit and track your academic projects</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📁</div>
+                    <div class="stat-value" id="totalProjects">0</div>
+                    <div class="stat-label">Total Projects</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="approvedCount">0</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+                <div class="stat-card yellow">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+            </div>
+
+            <!-- Projects Table -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>📋 All Projects</h2>
+                    <button class="btn btn-primary btn-sm" onclick="openNewProjectModal()">+ New Project</button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Technology</th>
+                                <th>Mentor</th>
+                                <th>Status</th>
+                                <th>Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTable">
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">📂</div>
+                                        <h3>No projects yet</h3>
+                                        <p>Submit your first project to get started!</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Project Modal -->
+    <div class="modal-overlay" id="newProjectModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Submit New Project</h3>
+                <button class="modal-close" onclick="closeModal('newProjectModal')">&times;</button>
+            </div>
+            <form id="newProjectForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title *</label>
+                    <input type="text" class="form-control" id="projectTitle" placeholder="e.g. Online Library System" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectDesc">Description</label>
+                    <textarea class="form-control" id="projectDesc" placeholder="Describe your project..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectTech">Technology Used</label>
+                    <input type="text" class="form-control" id="projectTech" placeholder="e.g. Node.js, MySQL, React">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div class="modal-overlay" id="projectDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="detailTitle">Project Details</h3>
+                <button class="modal-close" onclick="closeModal('projectDetailModal')">&times;</button>
+            </div>
+            <div id="detailContent"></div>
+
+            <!-- File Upload Section -->
+            <div class="mt-3">
+                <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--text-secondary);">📎 Upload Files</h4>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="hidden" id="uploadProjectId">
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,.zip,.rar,.ppt,.pptx,.txt,.jpg,.png">
+                        <div class="upload-icon">📤</div>
+                        <p>Click or drag file here to upload</p>
+                        <p class="file-name" id="selectedFileName"></p>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block mt-2" id="uploadBtn" disabled>Upload File</button>
+                </form>
+            </div>
+
+            <!-- Submitted Files -->
+            <div class="mt-3">
+                <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--text-secondary);">📁 Submitted Files</h4>
+                <div id="filesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/student.js"></script>
+</body>
+</html>
