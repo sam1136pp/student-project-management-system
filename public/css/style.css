@@ -8,49 +8,48 @@
 
 /* ---- CSS VARIABLES ---- */
 :root {
-    --bg-primary: #050505;
-    --bg-secondary: #0a0a0a;
-    --bg-card: rgba(10, 10, 10, 0.7);
-    --bg-glass: rgba(255, 255, 255, 0.05);
-    --bg-glass-hover: rgba(255, 255, 255, 0.1);
-    --border-glass: rgba(255, 255, 255, 0.2);
-    --border-glass-hover: rgba(255, 255, 255, 0.4);
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --bg-card: rgba(18, 18, 18, 0.8);
+    --bg-glass: rgba(255, 255, 255, 0.03);
+    --bg-glass-hover: rgba(255, 255, 255, 0.06);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --border-glass-hover: rgba(255, 255, 255, 0.15);
 
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --text-muted: #888888;
+    --text-primary: #ededed;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
 
     --accent-blue: #ffffff;
-    --accent-blue-glow: rgba(255, 255, 255, 0.6);
-    --accent-purple: #e0e0e0;
-    --accent-purple-glow: rgba(255, 255, 255, 0.6);
+    --accent-blue-glow: rgba(255, 255, 255, 0.1);
+    --accent-purple: #f4f4f5;
+    --accent-purple-glow: rgba(255, 255, 255, 0.1);
     --accent-green: #ffffff;
-    --accent-green-glow: rgba(255, 255, 255, 0.6);
+    --accent-green-glow: rgba(255, 255, 255, 0.1);
     --accent-red: #ffffff;
-    --accent-red-glow: rgba(255, 255, 255, 0.6);
+    --accent-red-glow: rgba(255, 255, 255, 0.1);
     --accent-yellow: #ffffff;
-    --accent-yellow-glow: rgba(255, 255, 255, 0.6);
+    --accent-yellow-glow: rgba(255, 255, 255, 0.1);
     --accent-cyan: #ffffff;
 
-    --gradient-primary: linear-gradient(135deg, #444444, #ffffff);
-    --gradient-green: linear-gradient(135deg, #666666, #ffffff);
-    --gradient-red: linear-gradient(135deg, #333333, #cccccc);
-    --gradient-yellow: linear-gradient(135deg, #555555, #eeeeee);
-    --gradient-bg: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                   radial-gradient(ellipse at bottom right, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    --gradient-primary: linear-gradient(180deg, #27272a, #18181b);
+    --gradient-green: linear-gradient(180deg, #27272a, #18181b);
+    --gradient-red: linear-gradient(180deg, #27272a, #18181b);
+    --gradient-yellow: linear-gradient(180deg, #27272a, #18181b);
+    --gradient-bg: none;
 
-    --shadow-sm: 0 1px 3px rgba(255, 255, 255, 0.1);
-    --shadow-md: 0 4px 20px rgba(255, 255, 255, 0.2);
-    --shadow-lg: 0 10px 40px rgba(255, 255, 255, 0.3);
-    --shadow-glow-blue: 0 0 30px rgba(255, 255, 255, 0.4);
-    --shadow-glow-purple: 0 0 30px rgba(255, 255, 255, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-glow-blue: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-glow-purple: 0 4px 6px rgba(0, 0, 0, 0.5);
 
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 20px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
 
-    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.2s ease-in-out;
 }
 
 /* ---- RESET ---- */
