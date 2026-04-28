@@ -1,25 +1,14 @@
 // =============================================
 // Student Dashboard JS
+// Depends on: utils.js (showToast, escHtml, openModal, closeModal, initModalOverlays, logout, API_BASE)
 // =============================================
 
-const API = '';
 let currentUser = null;
-
-// Toast
-function showToast(msg, type = 'info') {
-    const c = document.getElementById('toast-container');
-    const t = document.createElement('div');
-    t.className = `toast toast-${type}`;
-    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-    t.innerHTML = `<span>${icons[type] || ''}</span> ${msg}`;
-    c.appendChild(t);
-    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(100px)'; setTimeout(() => t.remove(), 300); }, 3500);
-}
 
 // Auth check
 async function init() {
     try {
-        const res = await fetch(`${API}/api/auth/me`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/api/auth/me`, { credentials: 'include' });
         if (!res.ok) { window.location.href = '/'; return; }
         const data = await res.json();
         if (data.user.role !== 'student') { window.location.href = '/'; return; }
@@ -32,15 +21,10 @@ async function init() {
     }
 }
 
-async function logout() {
-    await fetch(`${API}/api/auth/logout`, { credentials: 'include' });
-    window.location.href = '/';
-}
-
 // Load projects
 async function loadProjects() {
     try {
-        const res = await fetch(`${API}/api/student/projects`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/api/student/projects`, { credentials: 'include' });
         const projects = await res.json();
         renderProjects(projects);
         updateStats(projects);
@@ -78,16 +62,6 @@ function renderProjects(projects) {
     `).join('');
 }
 
-function escHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-}
-
-// Modal helpers
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
 function openNewProjectModal() { openModal('newProjectModal'); }
 
 // Submit new project
@@ -99,7 +73,7 @@ document.getElementById('newProjectForm').addEventListener('submit', async (e) =
         technology: document.getElementById('projectTech').value.trim()
     };
     try {
-        const res = await fetch(`${API}/api/student/projects`, {
+        const res = await fetch(`${API_BASE}/api/student/projects`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -122,7 +96,7 @@ document.getElementById('newProjectForm').addEventListener('submit', async (e) =
 // View project details
 async function viewProject(projectId) {
     try {
-        const res = await fetch(`${API}/api/student/projects`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/api/student/projects`, { credentials: 'include' });
         const projects = await res.json();
         const project = projects.find(p => p.project_id === projectId);
         if (!project) { showToast('Project not found.', 'error'); return; }
@@ -156,7 +130,7 @@ async function viewProject(projectId) {
 
 async function loadFiles(projectId) {
     try {
-        const res = await fetch(`${API}/api/student/projects/${projectId}/files`, { credentials: 'include' });
+        const res = await fetch(`${API_BASE}/api/student/projects/${projectId}/files`, { credentials: 'include' });
         const files = await res.json();
         const container = document.getElementById('filesList');
         if (files.length === 0) {
@@ -225,7 +199,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     formData.append('file', fileInput.files[0]);
 
     try {
-        const res = await fetch(`${API}/api/student/projects/${projectId}/upload`, {
+        const res = await fetch(`${API_BASE}/api/student/projects/${projectId}/upload`, {
             method: 'POST',
             credentials: 'include',
             body: formData
@@ -246,11 +220,6 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     uploadBtn.textContent = 'Upload File';
 });
 
-// Close modal on clicking overlay
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) overlay.classList.remove('active');
-    });
-});
-
+// Initialize
+initModalOverlays();
 init();

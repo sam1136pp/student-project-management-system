@@ -20,9 +20,9 @@
                 <h2>SPMS</h2>
             </div>
             <ul class="sidebar-nav">
-                <li><a href="#" class="active" onclick="showSection('overview'); return false;"><span class="nav-icon">📊</span> Overview</a></li>
-                <li><a href="#" onclick="showSection('users'); return false;"><span class="nav-icon">👥</span> Users</a></li>
-                <li><a href="#" onclick="showSection('projects'); return false;"><span class="nav-icon">📁</span> Projects</a></li>
+                <li><a href="#" class="active" onclick="showSection('overview', event); return false;"><span class="nav-icon">📊</span> Overview</a></li>
+                <li><a href="#" onclick="showSection('users', event); return false;"><span class="nav-icon">👥</span> Users</a></li>
+                <li><a href="#" onclick="showSection('projects', event); return false;"><span class="nav-icon">📁</span> Projects</a></li>
             </ul>
             <div class="sidebar-user">
                 <div class="user-info">
@@ -220,6 +220,7 @@
         </div>
     </div>
 
+    <script src="/js/utils.js"></script>
     <script src="/js/admin.js"></script>
 </body>
 </html>

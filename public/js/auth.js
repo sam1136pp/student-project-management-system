@@ -1,23 +1,7 @@
 // =============================================
 // Auth JS — Login & Registration Logic
+// Depends on: utils.js (showToast, API_BASE)
 // =============================================
-
-const API_BASE = '';
-
-// Toast notification system
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-    toast.innerHTML = `<span>${icons[type] || ''}</span> ${message}`;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100px)';
-        setTimeout(() => toast.remove(), 300);
-    }, 3500);
-}
 
 // Check if user is already logged in
 async function checkAuth() {

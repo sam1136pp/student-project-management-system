@@ -58,6 +58,23 @@ app.get('/{*path}', (req, res) => {
 });
 
 // ========================
+// GLOBAL ERROR HANDLER
+// ========================
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err.message);
+
+    // Handle multer file size / type errors
+    if (err.message && err.message.includes('File type not allowed')) {
+        return res.status(400).json({ error: err.message });
+    }
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ error: 'File too large. Maximum size is 10MB.' });
+    }
+
+    res.status(500).json({ error: 'Internal server error.' });
+});
+
+// ========================
 // START SERVER
 // ========================
 app.listen(PORT, () => {
@@ -65,3 +82,4 @@ app.listen(PORT, () => {
     console.log(`📂 Static files served from /public`);
     console.log(`📁 Uploads stored in /uploads\n`);
 });
+

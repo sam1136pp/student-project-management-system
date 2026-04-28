@@ -12,6 +12,17 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'All fields are required.' });
         }
 
+        // Only allow student and faculty self-registration
+        const allowedRoles = ['student', 'faculty'];
+        if (!allowedRoles.includes(role)) {
+            return res.status(403).json({ error: 'Invalid role. Only students and faculty can self-register.' });
+        }
+
+        // Enforce minimum password length
+        if (password.length < 6) {
+            return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+        }
+
         // Check if username or email already exists
         const [existing] = await db.query(
             'SELECT user_id FROM users WHERE username = ? OR email = ?',
